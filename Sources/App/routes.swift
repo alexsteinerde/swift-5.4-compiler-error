@@ -1,11 +1,13 @@
 import Vapor
 
 func routes(_ app: Application) throws {
-    app.get { req in
-        return "It works!"
+    
+    app.post("world") { req -> EventLoopFuture<TestResponse> in
+        req.eventLoop.makeSucceededFuture(TestResponse(value: "hello"))
     }
-
-    app.get("hello") { req -> String in
-        return "Hello, world!"
+    
+    struct TestResponse: Content {
+        let value: String
+        var another: String? = nil
     }
 }
